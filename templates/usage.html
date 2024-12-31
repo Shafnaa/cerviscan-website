@@ -1,0 +1,59 @@
+{% extends 'base.html' %}{% block title %} Usage {% endblock %} {% block content
+%}
+<div class="container">
+    <!-- ABOUT SECTION -->
+    <div class="card">
+        <h2 class="title">About CerviScan</h2>
+        <p class="about-paragraph">
+            <span class="indentation"></span>CerviScan is an innovative
+            application designed for the early detection of cervical cancer
+            using Visual Inspection with Acetic Acid (VIA) images. This
+            detection is powered by a machine learning model, ensuring accurate
+            and efficient results.
+        </p>
+        <p class="about-paragraph">
+            <span class="indentation"></span>This project is supervised by
+            <span class="bold"
+                >Prof. Dr. Eng. Retno Supriyanti, S.T., M.T.</span
+            >
+            and developed by a team of Electrical Engineering students from
+            Universitas Jenderal Soedirman:
+        </p>
+        <div class="member-container">
+            <p class="about-paragraph">1. M. Saujana Shafi</p>
+            <p class="about-paragraph">2. Fillipus Aditya Nugroho</p>
+            <p class="about-paragraph">3. Tegar Dwi Agung Saputra</p>
+            <p class="about-paragraph">4. Muhammad Rizqy M. S.</p>
+        </div>
+    </div>
+
+    <!-- USAGE INSTRUCTIONS -->
+    <div class="card">
+        <h2 class="title">Usage Instructions</h2>
+        <p class="paragraph">
+            1. Go to the <span class="bold">Go Scan</span> page.
+        </p>
+        <p class="paragraph">
+            2. Fill out the <span class="bold">Profile Card</span> by entering
+            the patient's first name, last name, and date of birth.
+        </p>
+        <p class="paragraph">
+            3. Upload a VIA image. Ensure the image is cropped to focus on the
+            region of interest before uploading.
+        </p>
+        <p class="paragraph">
+            4. Press the <span class="bold">Go Scan</span> button below the
+            upload field to start the prediction process.
+        </p>
+        <p class="paragraph">
+            5. View the prediction results and details on the
+            <span class="bold">Result Card</span>.
+        </p>
+        <p class="paragraph">
+            6. To save the results to the album, press
+            <span class="bold">Save</span>. Press
+            <span class="bold">Retake Scan</span> to redo the detection.
+        </p>
+    </div>
+</div>
+{% endblock %}

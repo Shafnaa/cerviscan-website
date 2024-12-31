@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Patient Card</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #f9f9f9;
+            }
+
+            h1 {
+                margin-bottom: 20px;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 400px;
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .search-bar {
+                width: 100%;
+                padding: 10px 15px;
+                font-size: 14px;
+                border: 1px solid #ccc;
+                border-radius: 20px;
+                outline: none;
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            a.album-card {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                width: 400px;
+                padding: 15px 20px;
+                background-color: #fff;
+                border: none;
+                border-radius: 10px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                text-decoration: none;
+                color: inherit;
+                margin-bottom: 15px;
+            }
+
+            .album-card-head {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .album-card-head p {
+                margin: 0;
+                font-size: 14px;
+                font-weight: bold;
+                padding-bottom: 10px;
+            }
+
+            .album-card-foot {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
+
+            .album-card-foot button {
+                background-color: #f42828;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                padding: 5px 10px;
+                font-weight: bold;
+            }
+
+            .status-tag {
+                padding: 5px 10px;
+                width: fit-content;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: bold;
+                color: white;
+                text-align: center;
+            }
+
+            .status-abnormal {
+                background-color: #f42828;
+            }
+
+            .status-normal {
+                background-color: #28f428;
+            }
+
+            .date-tag {
+                background-color: #68e0cf;
+                padding: 5px 10px;
+                border-radius: 20px;
+                font-size: 12px;
+                color: black;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Albums</h1>
+        <!-- Search Bar Section -->
+        <div class="search-container">
+            <input
+                type="text"
+                class="search-bar"
+                placeholder="Search by patient name or date..."
+            />
+        </div>
+        <!-- Patient Card Section -->
+        <a class="album-card" href="https://www.google.com">
+            <div class="album-card-head">
+                <p>Patient Name</p>
+                <div class="date-tag">12/31/2024</div>
+            </div>
+            <div class="album-card-foot">
+                <div class="status-tag status-abnormal">Abnormal</div>
+                <form
+                    action="/delete/{{ loop.index0 }}"
+                    method="POST"
+                    class="mt-2"
+                >
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </a>
+    </body>
+</html>

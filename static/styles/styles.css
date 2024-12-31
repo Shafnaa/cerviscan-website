@@ -1,0 +1,303 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fbfbfe;
+}
+
+.navbar {
+    background: #4056d4;
+    margin: 0;
+    padding: 20px 30px;
+}
+
+.logo {
+    font-size: 16pt;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tombol {
+    display: none;
+    color: white;
+    font-size: 14pt;
+}
+
+.tombol:hover {
+    cursor: pointer;
+}
+
+.menu {
+    margin: 0;
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    padding-left: 0;
+    margin-right: 10px;
+}
+
+.menu li a {
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* USAGE */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+}
+
+.card {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 30px;
+    padding: 20px 50px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.about-paragraph,
+.paragraph {
+    font-size: 16px;
+    text-align: justify;
+    margin-bottom: 8px;
+}
+
+.member-container {
+    margin-left: 30px;
+}
+
+.indentation {
+    display: inline-block;
+    width: 30px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+/* FORM STYLING */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #9c9c9c;
+    border-radius: 8px;
+    background-color: #fbfbfe;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group input[type="file"] {
+    padding: 5px;
+    width: 100%;
+}
+
+.readonly-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    border: 1px solid #9c9c9c;
+    border-radius: 8px;
+    color: #6c757d;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #4056d4;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #3045a6;
+}
+
+/* RESULT SECTION */
+.result-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.result-section div {
+    flex: 1 1 calc(25% - 20px);
+    text-align: center;
+}
+
+.result-section img {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* =========== PREDICTION TAG =========== */
+.prediction-tag {
+    /* Perbaiki penulisan di sini */
+    width: fit-content;
+    border-radius: 10px;
+    padding: 10px 10px;
+}
+.prediction-tag p {
+    /* Pastikan kelas yang sama */
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* =========== ALBUM CARD =========== */
+h1 {
+    margin-bottom: 20px;
+}
+
+.search-container {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+a.album-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 400px;
+    padding: 15px 20px;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 15px;
+}
+
+.album-card-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.album-card-head p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.album-card-foot {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.album-card-foot button {
+    background-color: #f42828;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+.status-tag {
+    padding: 5px 10px;
+    width: fit-content;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.status-abnormal {
+    background-color: #f42828;
+}
+
+.status-normal {
+    background-color: #28f428;
+}
+
+.date-tag {
+    background-color: #68e0cf;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: black;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .menu {
+        display: none;
+    }
+
+    .menu.aktif {
+        display: inline-block;
+        position: absolute;
+        top: 64px;
+        background: #4056d4;
+        padding: 10px 20px;
+        right: 0;
+        left: 0;
+    }
+
+    .menu.aktif li a {
+        padding: 10px;
+        display: inline-block !important;
+    }
+
+    .tombol {
+        display: block;
+    }
+}

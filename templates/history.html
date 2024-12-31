@@ -1,0 +1,52 @@
+{% extends 'base.html' %}{% block title %} History {% endblock %} {% block
+content %}
+<h1>Albums</h1>
+<div class="search-container">
+    <input
+        type="text"
+        class="search-bar"
+        id="search-bar"
+        placeholder="Search by patient name or date..."
+        onkeyup="filterHistory()"
+    />
+</div>
+{% for entry in history %}
+<a class="album-card" href="/history/{{ entry.id }}">
+    <div class="album-card-head">
+        <p>{{entry.name}}</p>
+        <div class="date-tag">{{entry.date}}</div>
+    </div>
+    <div class="album-card-foot">
+        {% if entry.prediction == 0 %}
+        <div class="status-tag status-normal">Normal</div>
+        {% else %}
+        <div class="status-tag status-abnormal">Abnormal</div>
+        {% endif %}
+        <form action="/delete/{{ entry.id }}" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</a>
+<script>
+    function filterHistory() {
+        const searchInput = document
+            .getElementById("search-bar")
+            .value.toLowerCase();
+        const cards = document.querySelectorAll(".album-card");
+
+        cards.forEach((card) => {
+            const name = card.getAttribute("data-name");
+            const date = card.getAttribute("data-date");
+            if (name.includes(searchInput) || date.includes(searchInput)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this entry?");
+    }
+</script>
+{% endfor %} {% endblock %}

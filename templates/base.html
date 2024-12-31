@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %} {% endblock %} - CerviScan</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles/styles.css') }}"
+        />
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="{{ url_for('index') }}" class="logo">CerviScan</a>
+
+                <ul class="menu">
+                    <li><a href="{{ url_for('index') }}">Go Scan</a></li>
+                    <li><a href="{{ url_for('history_page') }}">History</a></li>
+                    <li><a href="{{ url_for('usage') }}">Usage</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+
+                <div class="tombol">&#9776;</div>
+            </div>
+        </nav>
+
+        <div>
+            <center>{% block content %}{% endblock %}</center>
+        </div>
+
+        <script type="text/javascript">
+            // deklarasi tombol dan menu
+            const tombol = document.querySelector(".tombol");
+            const menu = document.querySelector(".menu");
+
+            // membuat event click
+            // pada saat tombol di click, tambahkan class aktif pada class menu
+            // saat diklik lagi, maka class aktif dihilangkan dari class menu (toggle)
+            tombol.addEventListener("click", () => {
+                menu.classList.toggle("aktif");
+            });
+        </script>
+    </body>
+</html>
