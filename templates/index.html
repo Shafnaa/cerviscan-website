@@ -1,8 +1,8 @@
-{% extends 'base.html' %} {% block title %}Patient Form{% endblock %} {% block
-content %}
-<div class="container">
-    <div class="card">
-        <h2 class="title">Patient Profile</h2>
+{% extends 'base.html' %} {% block title %}Go Scan | CerviScan{% endblock %} {%
+block content %}
+<div class="page-container">
+    <div class="section-container patient-card">
+        <h1>Patient Profile</h1>
         <form
             action="/"
             method="POST"
@@ -50,39 +50,38 @@ content %}
     </div>
 
     {% if result %}
-    <div class="card">
-        <h2 class="title">Result</h2>
-        {% if result.prediction == 0 %}
-        <div class="prediction-tag" style="background-color: rgb(40, 244, 40)">
-            <p>Normal</p>
-        </div>
-        {% else %}
-        <div class="prediction-tag" style="background-color: rgb(244, 40, 40)">
-            <p>Abnormal</p>
-        </div>
-        {% endif %}
-        <div class="result-section grid">
-            <div>
-                <h3>RGB</h3>
-                <img src="{{ result.original }}" alt="Original Image" />
+    <div class="section-container results-container">
+        <h1>Results</h1>
+        <div id="results-tag-index-page">
+            {% if result.prediction == "normal" %}
+            <div class="tag normal">
+                <p>Normal</p>
             </div>
-            <div>
-                <h3>Gray</h3>
-                <img src="{{ result.gray }}" alt="Gray Image" />
+            {% else %}
+            <div class="tag abnormal">
+                <p>Abnormal</p>
             </div>
-            <div>
-                <h3>Mask</h3>
-                <img src="{{ result.mask }}" alt="Mask Image" />
-            </div>
-            <div>
-                <h3>Segmented</h3>
-                <img src="{{ result.segmented }}" alt="Segmented Image" />
+            {% endif %}
+            <div class="tag date">
+                <p>{{ result.date.strftime('%Y-%m-%d %H:%M:%S') }}</p>
             </div>
         </div>
+        <h1>Details</h1>
+        <ul>
+            <li>1. VIA Image</li>
+            <div><img src="{{ result.original }}" alt="IVA Image" /></div>
+            <li>2. Gray Image</li>
+            <div><img src="{{ result.gray }}" alt="gray image" /></div>
+            <li>3. Mask Image</li>
+            <div><img src="{{ result.mask }}" alt="mask image" /></div>
+            <li>4. Segmented Image</li>
+            <div>
+                <img src="{{ result.segmented }}" alt="segmented image" />
+            </div>
+        </ul>
     </div>
     {% endif %}
 </div>
-
 <script>
     function previewImage(event) {
         const previewDiv = document.getElementById("image-preview");
@@ -90,10 +89,10 @@ content %}
         if (file) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                previewDiv.innerHTML = `<img src="${e.target.result}" alt="Image Preview" style="max-width: 30%; height: auto;"/>`;
+                previewDiv.innerHTML = `<img src="${e.target.result}" alt="Image Preview" style="max-width: 100%; height: auto; margin-left: auto; margin-right: auto; align-self: center;"/>`;
             };
             reader.readAsDataURL(file);
         }
     }
 </script>
-{% endblock %}
+{%endblock%}

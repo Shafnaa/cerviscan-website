@@ -6,13 +6,21 @@
         <title>{% block title %} {% endblock %} - CerviScan</title>
         <link
             rel="stylesheet"
-            href="{{ url_for('static', filename='styles/styles.css') }}"
+            href="{{ url_for('static', filename='styles/styles_.css') }}"
         />
     </head>
     <body>
         <nav class="navbar">
             <div class="nav-container">
-                <a href="{{ url_for('index') }}" class="logo">CerviScan</a>
+                <div class="logo-container">
+                    <img src="../static/assets/logo-unsoed-baru.png" alt="" />
+                    <div>
+                        <a href="{{ url_for('index') }}" class="logo"
+                            >CerviScan</a
+                        >
+                        <p>cervical cancer detection</p>
+                    </div>
+                </div>
 
                 <ul class="menu">
                     <li><a href="{{ url_for('index') }}">Go Scan</a></li>
@@ -25,9 +33,7 @@
             </div>
         </nav>
 
-        <div>
-            <center>{% block content %}{% endblock %}</center>
-        </div>
+        {% block content %}{% endblock %}
 
         <script type="text/javascript">
             // deklarasi tombol dan menu

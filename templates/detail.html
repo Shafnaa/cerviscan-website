@@ -1,95 +1,86 @@
-{% extends 'base.html' %} {% block title %}Patient Detail{% endblock %} {% block
-content %}
-<div class="container">
-    <!-- Patient Profile Section -->
-    <div class="card">
-        <h2 class="title">Patient Profile</h2>
-        <div class="form-group">
-            <label>First Name:</label>
-            <p>{{ entry.name.split(' ')[0] }}</p>
-        </div>
-        <div class="form-group">
-            <label>Last Name:</label>
-            <p>{{ entry.name.split(' ')[1] }}</p>
-        </div>
-        <div class="form-group">
-            <label>Date of Birth:</label>
-            <p>{{ entry.dob }}</p>
-        </div>
-        <div class="form-group">
-            <label>Date of Scan:</label>
-            <p>{{ entry.date.strftime('%Y-%m-%d %H:%M:%S') }}</p>
-        </div>
+{% extends 'base.html' %} {% block title %}Patient Detail | CerviScan{% endblock
+%} {% block content %}
+<div class="page-container">
+    <div class="section-container patient-card">
+        <h1>Patient Profile</h1>
+        <form
+            action="/"
+            method="POST"
+            enctype="multipart/form-data"
+            class="form"
+        >
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    value="{{ entry.name.split(' ')[0] }}"
+                    disabled
+                />
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    value="{{ entry.name.split(' ')[1] }}"
+                    disabled
+                />
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input
+                    type="date"
+                    id="dob"
+                    name="dob"
+                    value="{{ entry.dob }}"
+                    disabled
+                />
+            </div>
+        </form>
     </div>
-
-    <!-- Result Section -->
-    <div class="card">
-        <h2 class="title">Scan Results</h2>
-        {% if entry.prediction == 0 %}
-        <div
-            class="prediction-tag"
-            style="background-color: rgb(40, 244, 40); color: white"
-        >
-            <p>Normal</p>
+    <div class="section-container results-container">
+        <h1>Results</h1>
+        <div id="results-tag-index-page">
+            {% if entry.prediction == "normal" %}
+            <div class="tag normal">
+                <p>Normal</p>
+            </div>
+            {% else %}
+            <div class="tag abnormal">
+                <p>Abnormal</p>
+            </div>
+            {% endif %}
+            <div class="tag date">
+                <p>{{ entry.date.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            </div>
         </div>
-        {% else %}
-        <div
-            class="prediction-tag"
-            style="background-color: rgb(244, 40, 40); color: white"
-        >
-            <p>Abnormal</p>
-        </div>
-        {% endif %}
-        <div class="result-section">
-            <div class="result-item">
-                <h3>Original Image</h3>
+        <h1>Details</h1>
+        <ul>
+            <li>1. VIA Image</li>
+            <div>
                 <img src="../static/uploads\\{{entry.original.split("\\")[-1]}}"
-                alt="Original Image of the Patient" />
+                alt="IVA Image" />
             </div>
-            <div class="result-item">
-                <h3>Gray Image</h3>
+            <li>2. Gray Image</li>
+            <div>
                 <img src="../static/processed\\{{entry.gray.split("\\")[-1]}}"
-                alt="Grayscale Image" />
+                alt="gray image" />
             </div>
-            <div class="result-item">
-                <h3>Mask Image</h3>
+            <li>3. Mask Image</li>
+            <div>
                 <img src="../static/processed\\{{entry.mask.split("\\")[-1]}}"
-                alt="Mask Image" />
+                alt="mask image" />
             </div>
-            <div class="result-item">
-                <h3>Segmented Image</h3>
+            <li>4. Segmented Image</li>
+            <div>
                 <img
                 src="../static/processed\\{{entry.segmented.split("\\")[-1]}}"
-                alt="Segmented Image" />
+                alt="segmented image" />
             </div>
-        </div>
-    </div>
-
-    <!-- Navigation Buttons -->
-    <div class="navigation-buttons">
-        <a href="/history" class="btn btn-secondary">Back to History</a>
+        </ul>
     </div>
 </div>
-
-<style>
-    .result-section {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        margin-top: 20px;
-    }
-    .result-item img {
-        max-width: 100%;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        padding: 5px;
-    }
-    .navigation-buttons {
-        margin-top: 20px;
-        text-align: center;
-    }
-    .navigation-buttons .btn {
-        margin: 0 10px;
-    }
-</style>
 {% endblock %}

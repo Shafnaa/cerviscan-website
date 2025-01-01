@@ -5,94 +5,48 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Login</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f4f4f9;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
-            nav ul {
-                list-style: none;
-                padding: 0;
-                display: flex;
-                gap: 10px;
-                margin-bottom: 20px;
-            }
-            nav ul li {
-                display: inline;
-            }
-            nav ul li a {
-                text-decoration: none;
-                color: #007bff;
-                font-weight: bold;
-            }
-            h1 {
-                color: #333;
-                text-align: center;
-            }
-            form {
-                background: #fff;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                width: 100%;
-                max-width: 400px;
-            }
-            form label {
-                display: block;
-                margin-top: 10px;
-                font-weight: bold;
-            }
-            form input {
-                width: 100%;
-                padding: 10px;
-                margin-top: 5px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-            }
-            form button {
-                margin-top: 20px;
-                width: 100%;
-                padding: 10px;
-                border: none;
-                background-color: green;
-                color: #fff;
-                font-weight: bold;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-            form button:hover {
-                background-color: darkgreen;
-            }
-            .error {
-                color: red;
-                font-size: 0.9em;
-                margin-top: 10px;
-            }
-        </style>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles/styles_.css') }}"
+        />
     </head>
     <body>
-        <form action="/login" method="POST">
-            <h1>Login to Your Account</h1>
+        <div class="page-container">
+            <div class="section-container login-card">
+                <div class="identity">
+                    <img src="../static/assets/logo-unsoed-baru.png" />
+                    <div>
+                        <h1>CerviScan</h1>
+                        <p>cervical cancer detection</p>
+                    </div>
+                </div>
+                <form action="/login" method="POST">
+                    <h1>Login</h1>
 
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required />
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required />
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required />
+                    <label for="password">Password:</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                    />
 
-            <button type="submit">Login</button>
+                    <button type="submit">Login</button>
 
-            {% with messages = get_flashed_messages() %} {% if messages %}
-            <div class="error">{{ messages[0] }}</div>
-            {% endif %} {% endwith %}
+                    {% with messages = get_flashed_messages() %} {% if messages
+                    %}
+                    <div class="error">{{ messages[0] }}</div>
+                    {% endif %} {% endwith %}
 
-            <p>Don't have an account? <a href="/register">Sign up here</a>.</p>
-        </form>
+                    <p>
+                        Don't have an account?
+                        <a href="/register">Sign up here</a>.
+                    </p>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
