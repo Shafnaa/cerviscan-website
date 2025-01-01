@@ -2,14 +2,15 @@ from model.lab_color_moment import get_lab_color_moment, get_feature_name
 from model.lbp_extraction import get_lbp_features, get_lbp_name
 from model.glrlm_extraction import get_glrlm, get_glrlm_name
 from model.tamura_features import get_tamura, get_tamura_name
+from model.yuv_color_moment import get_feature_name as get_yuv_name, get_yuv_color_moment_features
 import pandas as pd
 
 def get_cerviscan_features(image_path):
     features = []
     features_name = []
     
-    lab_features = get_lab_color_moment(image_path)
-    lab_features_name = get_feature_name()
+    lab_features = get_yuv_color_moment_features(image_path)
+    lab_features_name = get_yuv_name()
     
     lbp_features = get_lbp_features(image_path)
     lbp_features_name = get_lbp_name()

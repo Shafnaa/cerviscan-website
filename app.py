@@ -143,6 +143,12 @@ def index():
             image_features = get_cerviscan_features(segmented_path)
             model = pickle.load(open('./model/xgb_best', 'rb'))
             prediction = model.predict(image_features)
+            print(prediction)
+            if prediction[0] == 0:
+                prediction = "normal"
+            else:
+                prediction = "abnormal"
+            print(prediction)
 
             entry = History(
                 user_id=current_user.id,
@@ -153,7 +159,7 @@ def index():
                 mask=mask_path,
                 segmented=segmented_path,
                 features=image_features,
-                prediction=prediction[0] if prediction else "Unknown",
+                prediction=prediction,
                 date=datetime.now()
             )
             db.session.add(entry)

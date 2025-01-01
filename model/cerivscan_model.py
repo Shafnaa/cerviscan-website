@@ -1,13 +1,12 @@
-from model.rgb_to_gray import rgb_to_gray_converter
-from model.multiotsu_segmentation import multiotsu_masking
-from model.bitwise_operation import get_segmented_image
+from rgb_to_gray import rgb_to_gray_converter
+from multiotsu_segmentation import multiotsu_masking
+from bitwise_operation import get_segmented_image
 
 from cerviscan_feature_extraction import get_cerviscan_features
 
 import os
 import pickle
 import matplotlib.pyplot as plt 
-
 
 def cerviscanModel(image_path, image_output):
     image = plt.imread(image_path)
@@ -35,5 +34,5 @@ def cerviscanModel(image_path, image_output):
     
     return features, result
     
-    
-    
+
+cerviscanModel("../static/uploads/AAA1.jpg", "../try")
