@@ -12,6 +12,7 @@ from model.cerviscan_feature_extraction import get_cerviscan_features
 import pickle
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
@@ -131,18 +132,22 @@ def index():
             gray_path = os.path.join(app.config['PROCESSED_FOLDER'], f'gray_{filename}')
             cv2.imwrite(gray_path, gray_image)
 
-            mask_image = multiotsu_masking(gray_image)
+            mask_image = multiotsu_masking(gray_path)
             mask_path = os.path.join(app.config['PROCESSED_FOLDER'], f'mask_{filename}')
-            cv2.imwrite(mask_path, mask_image)
+            plt.imsave(mask_path, mask_image, cmap="gray")
 
             original_image = cv2.imread(original_path)
-            segmented_image = get_segmented_image(original_image, mask_image)
+            segmented_image = get_segmented_image(original_image, mask_path)
             segmented_path = os.path.join(app.config['PROCESSED_FOLDER'], f'segmented_{filename}')
             cv2.imwrite(segmented_path, segmented_image)
 
             image_features = get_cerviscan_features(segmented_path)
             model = pickle.load(open('./model/xgb_best', 'rb'))
             prediction = model.predict(image_features)
+            
+            for feature_name, value in image_features.iloc[0].items():
+                print(f"{feature_name} : {value}")
+            
             print(prediction)
             if prediction[0] == 0:
                 prediction = "normal"

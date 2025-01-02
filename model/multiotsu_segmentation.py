@@ -3,7 +3,9 @@ import numpy as np
 from skimage import io, img_as_ubyte
 from skimage.filters import threshold_multiotsu
 
-def multiotsu_masking(image):
+def multiotsu_masking(image_path):
+    image = io.imread(image_path)
+    
     # Compute multi-Otsu thresholds
     threshold = threshold_multiotsu(image, classes=5)
 
