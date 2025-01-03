@@ -1,3 +1,31 @@
+"""
+Documentation for app.py
+=========================
+
+This Python application is built using Flask and performs image processing and user management tasks.
+It allows registered users to upload images for processing and view the results. The processed images
+and features are stored in a database, along with a prediction for each uploaded image.
+
+Key Features:
+- User registration and authentication.
+- Image upload and unique filename generation using UUID.
+- Image processing pipeline including RGB to grayscale conversion, segmentation, and feature extraction.
+- Prediction using a pre-trained model.
+- History management to view and delete previous uploads.
+
+Modules and Libraries Used:
+- Flask: Web framework.
+- Flask_SQLAlchemy: ORM for database operations.
+- Flask_Login: User session management.
+- Flask_Migrate: Database migration tool.
+- OpenCV (cv2): Image processing.
+- Matplotlib: Image saving for processed results.
+- Pickle: Loading pre-trained models.
+- Werkzeuge: Secure file handling.
+- UUID: Unique filename generation.
+- Datetime: Timestamp handling.
+"""
+
 from flask import Flask, render_template, request, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -15,23 +43,27 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import matplotlib.pyplot as plt
 import uuid
 
+# Flask application instance
 app = Flask(__name__)
 
+# Application configuration
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 app.config["SECRET_KEY"] = "abc"
 app.config['UPLOAD_FOLDER'] = './static/uploads'
 app.config['PROCESSED_FOLDER'] = './static/processed'
 
+# Initialize database and migration tools
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+# Flask-Login setup
 login_manager = LoginManager()
 login_manager.login_view = "login"
 login_manager.login_message = "You need to log in to access this page."
 login_manager.login_message_category = "info"
 login_manager.init_app(app)
 
-# Ensure directories exist
+# Ensure directories exist for uploaded and processed files
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs(app.config['PROCESSED_FOLDER'], exist_ok=True)
 
@@ -55,6 +87,7 @@ class History(db.Model):
     prediction = db.Column(db.String(250), nullable=False)
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
+# Initialize database within the application context
 with app.app_context():
     db.create_all()
 
@@ -62,7 +95,7 @@ with app.app_context():
 def loader_user(user_id):
     return Users.query.get(user_id)
 
-# Routes for user management
+# User registration route
 @app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -89,6 +122,7 @@ def register():
 
     return render_template("register.html")
 
+# User login route
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -106,6 +140,7 @@ def login():
 
     return render_template("login.html")
 
+# User logout route
 @app.route("/logout")
 @login_required
 def logout():
@@ -113,7 +148,7 @@ def logout():
     flash("You have been logged out.", "info")
     return redirect(url_for("login"))
 
-# Main application routes
+# Main application route for image processing
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
@@ -177,13 +212,14 @@ def index():
     user_history = History.query.filter_by(user_id=current_user.id).all()
     return render_template('index.html', result=result, history=user_history)
 
-
+# Route to view user history
 @app.route('/history', methods=['GET'])
 @login_required
 def history_page():
     user_history = History.query.filter_by(user_id=current_user.id).all()
     return render_template('history.html', history=user_history)
 
+# Route to view detailed history entry
 @app.route('/history/<int:id>', methods=['GET'])
 @login_required
 def history_detail(id):
@@ -193,6 +229,7 @@ def history_detail(id):
         return redirect(url_for('history_page'))
     return render_template('detail.html', entry=entry)
 
+# Route to delete a history entry
 @app.route('/delete/<int:id>', methods=['POST'])
 @login_required
 def delete_history(id):
