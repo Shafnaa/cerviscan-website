@@ -13,6 +13,7 @@ import pickle
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import matplotlib.pyplot as plt
+import uuid
 
 app = Flask(__name__)
 
@@ -124,30 +125,31 @@ def index():
         file = request.files['image']
 
         if file:
-            filename = secure_filename(file.filename)
-            original_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            # Generate UUID and use it as the filename
+            unique_filename = f"{uuid.uuid4().hex}{os.path.splitext(file.filename)[1]}"
+            original_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
             file.save(original_path)
 
             gray_image = rgb_to_gray_converter(original_path)
-            gray_path = os.path.join(app.config['PROCESSED_FOLDER'], f'gray_{filename}')
+            gray_path = os.path.join(app.config['PROCESSED_FOLDER'], f'gray_{unique_filename}')
             cv2.imwrite(gray_path, gray_image)
 
             mask_image = multiotsu_masking(gray_path)
-            mask_path = os.path.join(app.config['PROCESSED_FOLDER'], f'mask_{filename}')
+            mask_path = os.path.join(app.config['PROCESSED_FOLDER'], f'mask_{unique_filename}')
             plt.imsave(mask_path, mask_image, cmap="gray")
 
             original_image = cv2.imread(original_path)
             segmented_image = get_segmented_image(original_image, mask_path)
-            segmented_path = os.path.join(app.config['PROCESSED_FOLDER'], f'segmented_{filename}')
+            segmented_path = os.path.join(app.config['PROCESSED_FOLDER'], f'segmented_{unique_filename}')
             cv2.imwrite(segmented_path, segmented_image)
 
             image_features = get_cerviscan_features(segmented_path)
             model = pickle.load(open('./model/xgb_best', 'rb'))
             prediction = model.predict(image_features)
-            
+
             for feature_name, value in image_features.iloc[0].items():
                 print(f"{feature_name} : {value}")
-            
+
             print(prediction)
             if prediction[0] == 0:
                 prediction = "normal"
@@ -174,6 +176,7 @@ def index():
 
     user_history = History.query.filter_by(user_id=current_user.id).all()
     return render_template('index.html', result=result, history=user_history)
+
 
 @app.route('/history', methods=['GET'])
 @login_required
