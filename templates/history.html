@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% block title %} History {% endblock %} {% block
+{% extends 'base.html' %} {% block title %} History {% endblock %} {% block
 content %}
 <div class="page-container albums">
     <div class="albums-section">
@@ -14,11 +14,16 @@ content %}
         </div>
 
         {% for entry in history %}
-        <a class="album-card" href="/history/{{ entry.id }}">
+        <a
+            class="album-card"
+            href="/history/{{ entry.id }}"
+            data-name="{{ entry.name|lower }}"
+            data-date="{{ entry.date.strftime('%Y-%m-%d') }}"
+        >
             <div class="album-card-head">
-                <p>{{entry.name}}</p>
+                <p>{{ entry.name }}</p>
                 <div class="tag date">
-                    <p>{{entry.date.strftime('%Y-%m-%d')}}</p>
+                    <p>{{ entry.date.strftime('%Y-%m-%d') }}</p>
                 </div>
             </div>
             <div class="album-card-foot">
@@ -27,38 +32,38 @@ content %}
                 {% else %}
                 <div class="tag abnormal"><p>Abnormal</p></div>
                 {% endif %}
-                <form action="/delete/{{ entry.id }}" method="POST">
+                <form
+                    action="/delete/{{ entry.id }}"
+                    method="POST"
+                    onsubmit="return confirmDelete()"
+                >
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
             </div>
         </a>
-        <script>
-            function filterHistory() {
-                const searchInput = document
-                    .getElementById("search-bar")
-                    .value.toLowerCase();
-                const cards = document.querySelectorAll(".album-card");
-
-                cards.forEach((card) => {
-                    const name = card.getAttribute("data-name");
-                    const date = card.getAttribute("data-date");
-                    if (
-                        name.includes(searchInput) ||
-                        date.includes(searchInput)
-                    ) {
-                        card.style.display = "block";
-                    } else {
-                        card.style.display = "none";
-                    }
-                });
-            }
-
-            function confirmDelete() {
-                return confirm("Are you sure you want to delete this entry?");
-            }
-        </script>
-
         {% endfor %}
     </div>
 </div>
+<script>
+    function filterHistory() {
+        const searchInput = document
+            .getElementById("search-bar")
+            .value.toLowerCase();
+        const cards = document.querySelectorAll(".album-card");
+
+        cards.forEach((card) => {
+            const name = card.getAttribute("data-name");
+            const date = card.getAttribute("data-date");
+            if (name.includes(searchInput) || date.includes(searchInput)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this entry?");
+    }
+</script>
 {% endblock %}
